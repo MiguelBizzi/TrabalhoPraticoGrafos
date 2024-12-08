@@ -1,0 +1,96 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Bizzi\\Desktop\\puc\\TrabalhoPraticoGrafos\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8E993172-5766-4ABF-8FAD-72B175C10755}|TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos.csproj|c:\\users\\bizzi\\desktop\\puc\\trabalhopraticografos\\trabalhopraticografos\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E993172-5766-4ABF-8FAD-72B175C10755}|TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos.csproj|solutionrelative:trabalhopraticografos\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E993172-5766-4ABF-8FAD-72B175C10755}|TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos.csproj|c:\\users\\bizzi\\desktop\\puc\\trabalhopraticografos\\trabalhopraticografos\\aresta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E993172-5766-4ABF-8FAD-72B175C10755}|TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos.csproj|solutionrelative:trabalhopraticografos\\aresta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E993172-5766-4ABF-8FAD-72B175C10755}|TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos.csproj|c:\\users\\bizzi\\desktop\\puc\\trabalhopraticografos\\trabalhopraticografos\\grafo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E993172-5766-4ABF-8FAD-72B175C10755}|TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos.csproj|solutionrelative:trabalhopraticografos\\grafo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E993172-5766-4ABF-8FAD-72B175C10755}|TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos.csproj|c:\\users\\bizzi\\desktop\\puc\\trabalhopraticografos\\trabalhopraticografos\\vertice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E993172-5766-4ABF-8FAD-72B175C10755}|TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos.csproj|solutionrelative:trabalhopraticografos\\vertice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Grafo.cs",
+              "DocumentMoniker": "C:\\Users\\Bizzi\\Desktop\\puc\\TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos\\Grafo.cs",
+              "RelativeDocumentMoniker": "TrabalhoPraticoGrafos\\Grafo.cs",
+              "ToolTip": "C:\\Users\\Bizzi\\Desktop\\puc\\TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos\\Grafo.cs",
+              "RelativeToolTip": "TrabalhoPraticoGrafos\\Grafo.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAowAwAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-08T02:10:48.127Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Aresta.cs",
+              "DocumentMoniker": "C:\\Users\\Bizzi\\Desktop\\puc\\TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos\\Aresta.cs",
+              "RelativeDocumentMoniker": "TrabalhoPraticoGrafos\\Aresta.cs",
+              "ToolTip": "C:\\Users\\Bizzi\\Desktop\\puc\\TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos\\Aresta.cs",
+              "RelativeToolTip": "TrabalhoPraticoGrafos\\Aresta.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-08T02:09:28.432Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Vertice.cs",
+              "DocumentMoniker": "C:\\Users\\Bizzi\\Desktop\\puc\\TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos\\Vertice.cs",
+              "RelativeDocumentMoniker": "TrabalhoPraticoGrafos\\Vertice.cs",
+              "ToolTip": "C:\\Users\\Bizzi\\Desktop\\puc\\TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos\\Vertice.cs",
+              "RelativeToolTip": "TrabalhoPraticoGrafos\\Vertice.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-08T02:08:41.338Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Bizzi\\Desktop\\puc\\TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos\\Program.cs",
+              "RelativeDocumentMoniker": "TrabalhoPraticoGrafos\\Program.cs",
+              "ToolTip": "C:\\Users\\Bizzi\\Desktop\\puc\\TrabalhoPraticoGrafos\\TrabalhoPraticoGrafos\\Program.cs",
+              "RelativeToolTip": "TrabalhoPraticoGrafos\\Program.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAgwBMAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-08T01:19:50.551Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
