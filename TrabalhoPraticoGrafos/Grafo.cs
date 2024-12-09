@@ -67,11 +67,6 @@
         int n = vertices.Count;
         double[,] matriz = new double[n, n];
 
-        // foreach (var aresta in arestas)
-        // {
-        //     matriz[aresta.VerticeSaida.Indice, aresta.VerticeEntrada.Indice] = aresta.Peso;
-        // }
-
         for (int i = 0; i < matriz.GetLength(0); i++)
         {
             for (int j = 0; j < matriz.GetLength(1); j++)
@@ -80,19 +75,12 @@
                 {
                     if (j + 1 == a.VerticeEntrada.Indice && i + 1 == a.VerticeSaida.Indice)
                     {
-                        matriz[i,j] = matriz[i,j] == 0? a.Peso : +a.Peso;
-                        // if (matriz[i, j] == 0)
-                        // {
-                        //     matriz[i, j] = a.Peso;
-                        // }
-                        // else if (matriz[i, j] != 0)
-                        // {
-                        //     matriz[i, j] += a.Peso;
-                        // }
+                        matriz[i, j] = matriz[i, j] == 0 ? a.Peso : +a.Peso;
                     }
                 }
                 Console.Write($"{matriz[i, j]} ");
             }
+
             Console.WriteLine();
         }
     }
@@ -155,10 +143,6 @@
 
     public void ImprimirGrauVertice(int vertice)
     {
-        // int grauEntrada = arestas.Count(a => a.VerticeEntrada.Indice == vertice);
-        // int grauSaida = arestas.Count(a => a.VerticeSaida.Indice == vertice);
-        // Console.WriteLine($"Grau do vértice {vertice}: Entrada = {grauEntrada}, Saída = {grauSaida}, Total = {grauEntrada + grauSaida}");
-
         double somaPeso = 0;
 
         foreach (var aresta in arestas)
@@ -235,7 +219,6 @@
 
         ImprimirListaAdjacencia();
     }
-
     public void MostrarSeDoisSaoAdjacentes(int v1, int v2)
     {
         bool eAdj = false;
@@ -269,177 +252,205 @@
 
     }
 
-
-    //Busca largura
-
-
-    public void IniciarBuscaLargura(int v)
+    public void IniciarBuscaLargura(int verticeInicial)
     {
-        int t = 0;
-        Queue<Vertice> fila = new();
-
-        if (!vertices.Any(ve => ve.Indice == v))
+        if (verticeInicial < 0 || verticeInicial >= vertices.Count)
         {
-            Console.WriteLine("O vértice fornecido não foi encontrado.");
+            Console.WriteLine("Vértice inicial inválido.");
             return;
         }
 
-        Vertice primeiroV = vertices.Find(a => a.Indice == v);
+        var niveis = new Dictionary<int, int>();
+        var predecessores = new Dictionary<int, int?>();
+        var visitados = new HashSet<int>();
+        var fila = new Queue<int>();
 
-        List<Vertice> vetorModificado = vertices;
+        niveis[verticeInicial] = 0;
+        predecessores[verticeInicial] = null;
+        fila.Enqueue(verticeInicial);
+        visitados.Add(verticeInicial);
 
-        vetorModificado.Remove(primeiroV);
-        vetorModificado.Insert(0, primeiroV);
+        Console.WriteLine($"Iniciando a busca em largura a partir do vértice {verticeInicial}.");
 
-        foreach (Vertice vertice in vetorModificado)
-        {
-            if (vertice.L == 0)
-            {
-                t += 1;
-                vertice.L = t;
-                fila.Enqueue(vertice);
-                BuscaLarguraDirecionada(arestas, t, fila);
-            }
-        }
-    }
-    public static void BuscaLarguraDirecionada(List<Aresta> arestas, int t, Queue<Vertice> fila)
-    {
-        while (fila.Count != 0)
-        {
-            Vertice v = fila.First();
-            fila.Dequeue();
-            var arestasOrdenadas = arestas.OrderBy(a => a.VerticeEntrada.Indice);
-            foreach (Aresta a in arestasOrdenadas)
-            {
-                if (a.VerticeSaida == v)
-                {
-
-                    if (a.VerticeEntrada.L == 0)
-                    {
-                        t += 1;
-                        a.VerticeEntrada.L = t;
-                        a.VerticeEntrada.pai = v;
-                        a.VerticeEntrada.nivel = v.nivel + 1;
-                        fila.Enqueue(a.VerticeEntrada);
-                        Console.WriteLine($"Aresta árvore de {v.Indice} para {a.VerticeEntrada.Indice}. Nível de {v.Indice}: {v.nivel}. Predecessor: {(v.pai != null ? v.pai.Indice : "-")}");
-                    }
-                    else if (v.pai != a.VerticeEntrada && v.nivel > a.VerticeEntrada.nivel)
-                    {
-                        Console.WriteLine($"Aresta de retorno de {v.Indice} para {a.VerticeEntrada.Indice}. Nível de {v.Indice}: {v.nivel}. Predecessor: {v.pai.Indice}.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Aresta de cruzamento de {v.Indice} para {a.VerticeEntrada.Indice}. Nível de {v.Indice}: {v.nivel}. Predecessor: {v.pai.Indice}.");
-                    }
-                }
-            }
-        }
-    }
-
-
-    //Profundidade
-
-    public void IniciarBuscaProfundidade()
-    {
-        int t = 0;
-        foreach (var vertice in vertices)
-        {
-            if (vertice.tempoDescoberta == 0)
-            {
-                BuscaProfundidade(t, vertice);
-            }
-        }
-    }
-    public void BuscaProfundidade(int t, Vertice v)
-    {
-        t += 1;
-        v.tempoDescoberta = t;
-
-        foreach (Aresta a in arestas.Where(a => a.VerticeSaida == v))
-        {
-            if (a.VerticeEntrada.tempoDescoberta == 0)
-            {
-                a.VerticeEntrada.pai = v;
-                Console.WriteLine($"Aresta de árvore de {v.Indice} para {a.VerticeEntrada.Indice}. Tempo de descoberta de {v.Indice}: {v.tempoDescoberta}.");
-                BuscaProfundidade(t, a.VerticeEntrada);
-            }
-            else
-            {
-                if (a.VerticeEntrada.tempoTermino == 0)
-                {
-                    Console.WriteLine($"Aresta de retorno de {v.Indice} para {a.VerticeEntrada.Indice}.");
-                }
-                else if (v.tempoDescoberta < a.VerticeEntrada.tempoDescoberta)
-                {
-                    Console.WriteLine($"Aresta de avanço de {v.Indice} para {a.VerticeEntrada.Indice}.");
-                }
-                else
-                {
-                    Console.WriteLine($"Aresta de cruzamento de {v.Indice} para {a.VerticeEntrada.Indice}.");
-                }
-            }
-            t += 1;
-            v.tempoTermino = t;
-
-        }
-
-        Console.WriteLine("Tempo de término: " + v.tempoTermino);
-    }
-
-
-    // Dijkstra
-
-    public void Dijkstra(int origem, int destino)
-    {
-        List<Aresta> caminho = [];
-        List<Aresta> explorados = [];
-
-        Vertice primeiroV = vertices.Find(a => a.Indice == origem);
-
-        Queue<Vertice> fila = [];
-        fila.Enqueue(primeiroV);
         while (fila.Count > 0)
         {
-            // List<Aresta> tempList = [];
-            // foreach (var a in arestas)
-            // {
-            //     if (a.VerticeSaida == v)
-            //     {
-            //         tempList.Add(a);
-            //     }
-            // }
+            int atual = fila.Dequeue();
+            Console.WriteLine($"\nExplorando vértice {atual} no nível {niveis[atual]}.");
 
-            double menor = double.MaxValue;
-            Aresta escolhida = null;
-            foreach (var a in arestas)
+            var adjacentes = arestas
+                .Where(a => a.VerticeSaida.Indice == atual)
+                .Select(a => a.VerticeEntrada.Indice)
+                .OrderBy(v => v);
+
+            foreach (int vizinho in adjacentes)
             {
-                if (a.VerticeSaida.Indice == fila.Peek().Indice)
+                if (!visitados.Contains(vizinho))
                 {
-                    if (a.Peso < menor)
-                    {
-                        escolhida = a;
-                        menor = a.Peso;
-                    }
-
+                    visitados.Add(vizinho);
+                    niveis[vizinho] = niveis[atual] + 1;
+                    predecessores[vizinho] = atual;
+                    fila.Enqueue(vizinho);
+                    Console.WriteLine($"Vértice {vizinho} descoberto no nível {niveis[vizinho]} (predecessor: {atual}).");
                 }
-
             }
-
-            fila.Dequeue();
-
-            if (escolhida != null)
-            {
-                escolhida.VerticeEntrada.distancia = escolhida.VerticeSaida.distancia + escolhida.Peso;
-                escolhida.VerticeEntrada.pai = escolhida.VerticeSaida;
-                caminho.Add(escolhida);
-            }
-
-            fila.Enqueue(escolhida.VerticeEntrada);
         }
 
-        foreach (var a in caminho)
+        Console.WriteLine("\n--- Resultados da busca em largura ---");
+        Console.WriteLine("Vértice | Nível | Predecessor");
+        foreach (var vertice in vertices)
         {
-            Console.WriteLine($"Vértice {a.VerticeSaida.Indice} para {a.VerticeEntrada.Indice} com peso {a.Peso}.");
+            int v = vertice.Indice;
+            string predecessor = predecessores.ContainsKey(v) && predecessores[v].HasValue
+                ? predecessores[v].Value.ToString()
+                : "Nenhum";
+            Console.WriteLine($"{v,7} | {niveis.GetValueOrDefault(v, -1),5} | {predecessor,11}");
         }
+    }
+
+    public void IniciarBuscaProfundidade(int verticeInicial)
+    {
+        if (verticeInicial < 0 || verticeInicial >= vertices.Count)
+        {
+            Console.WriteLine("Vértice inicial inválido.");
+            return;
+        }
+
+        var descoberto = new Dictionary<int, int>();
+        var finalizado = new Dictionary<int, int>();
+        var predecessores = new Dictionary<int, int?>();
+        var visitados = new HashSet<int>();
+        int tempo = 0;
+
+        foreach (var vertice in vertices)
+        {
+            predecessores[vertice.Indice] = null;
+        }
+
+        Console.WriteLine($"Iniciando busca em profundidade a partir do vértice {verticeInicial}.");
+        ExecutarBusca(verticeInicial, ref tempo, ref descoberto, ref finalizado, ref predecessores, ref visitados);
+
+        Console.WriteLine("\n--- Resultados da busca em profundidade ---");
+        Console.WriteLine("Vértice | Descoberta | Finalização | Predecessor");
+        foreach (var vertice in vertices)
+        {
+            int v = vertice.Indice;
+            string predecessor = predecessores[v].HasValue ? predecessores[v].Value.ToString() : "Nenhum";
+            Console.WriteLine($"{v,7} | {descoberto.GetValueOrDefault(v, -1),10} | {finalizado.GetValueOrDefault(v, -1),12} | {predecessor}");
+        }
+    }
+
+    public void ExecutarBusca(int verticeAtual, ref int tempo,
+                    ref Dictionary<int, int> descoberto,
+                    ref Dictionary<int, int> finalizado,
+                    ref Dictionary<int, int?> predecessores,
+                    ref HashSet<int> visitados)
+    {
+        visitados.Add(verticeAtual);
+
+        tempo++;
+        descoberto[verticeAtual] = tempo;
+
+        var adjacentes = arestas
+            .Where(a => a.VerticeSaida.Indice == verticeAtual)
+            .Select(a => a.VerticeEntrada.Indice)
+            .OrderBy(v => v);
+
+        foreach (int vizinho in adjacentes)
+        {
+            if (!visitados.Contains(vizinho))
+            {
+                predecessores[vizinho] = verticeAtual;
+                ExecutarBusca(vizinho, ref tempo, ref descoberto, ref finalizado, ref predecessores, ref visitados);
+            }
+        }
+
+        tempo++;
+        finalizado[verticeAtual] = tempo;
+    }
+
+    public void ExecutarDijkstra(int verticeOrigem, int verticeDestino)
+    {
+        var distancias = new Dictionary<int, double>();
+        var predecessores = new Dictionary<int, int?>();
+        var visitados = new HashSet<int>();
+        var minHeap = new SortedList<double, int>();
+
+        foreach (var vertice in vertices)
+        {
+            distancias[vertice.Indice] = double.PositiveInfinity;
+            predecessores[vertice.Indice] = null;
+        }
+
+        distancias[verticeOrigem] = 0;
+        minHeap.Add(0, verticeOrigem);
+
+        while (minHeap.Count > 0)
+        {
+            var currentDistancia = minHeap.Keys[0];
+            var verticeAtual = minHeap.Values[0];
+            minHeap.RemoveAt(0);
+
+            if (verticeAtual == verticeDestino)
+                break;
+
+            var adjacentes = arestas.Where(a => a.VerticeSaida.Indice == verticeAtual);
+            foreach (var aresta in adjacentes)
+            {
+                var vizinho = aresta.VerticeEntrada.Indice;
+                var pesoAresta = aresta.Peso;
+                var novaDistancia = distancias[verticeAtual] + pesoAresta;
+
+                if (novaDistancia < distancias[vizinho])
+                {
+                    distancias[vizinho] = novaDistancia;
+                    predecessores[vizinho] = verticeAtual;
+
+                    if (minHeap.ContainsValue(vizinho))
+                    {
+                        minHeap.RemoveAt(minHeap.IndexOfValue(vizinho));
+                    }
+                    minHeap.Add(novaDistancia, vizinho);
+                }
+            }
+        }
+
+        ImprimirCaminho(verticeOrigem, verticeDestino, predecessores, distancias);
+    }
+
+    public void ImprimirCaminho(int verticeOrigem, int verticeDestino, Dictionary<int, int?> predecessores, Dictionary<int, double> distancias)
+    {
+        if (distancias[verticeDestino] == double.PositiveInfinity)
+        {
+            Console.WriteLine("Não há caminho entre os vértices.");
+            return;
+        }
+
+        var caminho = new Stack<int>();
+        var verticeAtual = verticeDestino;
+
+        while (verticeAtual != verticeOrigem)
+        {
+            caminho.Push(verticeAtual);
+            verticeAtual = predecessores[verticeAtual].Value;
+        }
+        caminho.Push(verticeOrigem);
+
+        Console.WriteLine($"Caminho mais curto de {verticeOrigem} a {verticeDestino}:");
+        double pesoTotal = 0;
+        int? verticeAnterior = null;
+        while (caminho.Count > 1)
+        {
+            var v1 = caminho.Pop();
+            var v2 = caminho.Peek();
+            var aresta = arestas.FirstOrDefault(a => a.VerticeSaida.Indice == v1 && a.VerticeEntrada.Indice == v2);
+
+            if (aresta != null)
+            {
+                pesoTotal += aresta.Peso;
+                Console.WriteLine($"Vértice {v1} -> {v2} com peso {aresta.Peso}");
+            }
+        }
+
+        Console.WriteLine($"Peso total do caminho: {pesoTotal}");
     }
 }
