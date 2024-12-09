@@ -254,7 +254,7 @@
 
     public void IniciarBuscaLargura(int verticeInicial)
     {
-        if (verticeInicial < 0 || verticeInicial >= vertices.Count)
+        if (verticeInicial <= 0 || verticeInicial >= vertices.Count)
         {
             Console.WriteLine("Vértice inicial inválido.");
             return;
@@ -309,7 +309,7 @@
 
     public void IniciarBuscaProfundidade(int verticeInicial)
     {
-        if (verticeInicial < 0 || verticeInicial >= vertices.Count)
+        if (verticeInicial <= 0 || verticeInicial > vertices.Count)
         {
             Console.WriteLine("Vértice inicial inválido.");
             return;
