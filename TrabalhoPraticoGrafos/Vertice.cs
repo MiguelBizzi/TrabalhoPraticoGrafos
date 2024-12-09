@@ -7,6 +7,7 @@
     public int tempoDescoberta = 0;
     public int tempoTermino = 0;
     public double distancia = double.MaxValue;
+    public double pesoMenorAresta = 0;
 
     public Vertice(int indice)
     {

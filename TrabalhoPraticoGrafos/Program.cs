@@ -26,7 +26,7 @@
             Console.Write("Vértice de entrada: ");
             int entrada = int.TryParse(Console.ReadLine(), out entrada) ? entrada : throw new Exception("Ocorreu um erro. O valor não foi inserido ou estava em um formato incorreto.");
             Console.Write("Peso: ");
-            double peso = double.TryParse(Console.ReadLine(),out peso) ? peso : throw new Exception("Ocorreu um erro. O valor não foi inserido ou estava em um formato incorreto.");
+            double peso = double.TryParse(Console.ReadLine(), out peso) ? peso : throw new Exception("Ocorreu um erro. O valor não foi inserido ou estava em um formato incorreto.");
 
             verticeValido = grafo.AdicionarAresta(saida, entrada, peso);
         }
@@ -226,7 +226,7 @@
                     Console.WriteLine("Informe os vértices que serão trocados.");
 
                     Console.WriteLine("Vértice 1:");
-                    
+
                     int vertice1 = int.TryParse(Console.ReadLine(), out vertice1) ? vertice1 : throw new Exception("Valor inválido.");
 
                     Console.WriteLine("Vértice 2:");
@@ -256,9 +256,11 @@
                     Console.WriteLine("Informe o vértice de destino:");
                     int verticeDestino = int.Parse(Console.ReadLine());
 
-                    grafoLido.Dijkstra(verticeOrigem,verticeDestino);
+                    grafoLido?.Dijkstra(verticeOrigem, verticeDestino);
 
-                    //grafoLido?.ExecutarDijkstra(verticeOrigem, verticeDestino);
+                    break;
+                case "14":
+                    grafoLido?.Floyd();
                     break;
                 case "15":
                     Console.WriteLine("Saindo da aplicação");

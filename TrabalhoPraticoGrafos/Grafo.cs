@@ -382,6 +382,7 @@
         List<Aresta> explorados = [];
         Queue<Vertice> fila = [];
         fila.Enqueue(primeiro);
+        List<Vertice> caminho = [];
         double menorCaminho = 0;
 
         primeiro.distancia = 0;
@@ -396,10 +397,11 @@
             {
                 if (!explorados.Contains(a))
                 {
-                    double novaDistancia = v.distancia + a.Peso;
-                    if (novaDistancia < a.VerticeEntrada.distancia)
+                    if (v.distancia + a.Peso < a.VerticeEntrada.distancia)
                     {
-                        a.VerticeEntrada.distancia = novaDistancia;
+                        a.VerticeEntrada.distancia = v.distancia + a.Peso;
+                        a.VerticeEntrada.pai = v;
+                        a.VerticeEntrada.pesoMenorAresta = a.Peso;
                     }
 
                     if (!fila.Contains(a.VerticeEntrada))
@@ -417,13 +419,76 @@
             }
         }
 
-        if (menorCaminho > 0)
+        Vertice vDeRetorno = d;
+
+        while (vDeRetorno != null)
         {
-            Console.WriteLine("Menor caminho de " + origem + " para " + destino + ": " + menorCaminho);
+            caminho.Insert(0, vDeRetorno);
+            vDeRetorno = vDeRetorno.pai;
         }
-        else
+
+        foreach (var v in caminho)
         {
-            Console.WriteLine("Não foi possível encontrar um caminho de " + origem + " para " + destino);
+            Console.WriteLine($"({v.Indice}, peso {v.pesoMenorAresta})");
+        }
+
+    }
+
+    public void Floyd()
+    {
+        double[,] matrizDist = new double[vertices.Count, vertices.Count];
+
+        for (int i = 0; i < matrizDist.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrizDist.GetLength(1); j++)
+            {
+                if (j != i)
+                {
+                    matrizDist[i, j] = double.MaxValue;
+                }
+                else
+                {
+                    matrizDist[i, j] = 0;
+                }
+            }
+        }
+
+        for (int i = 0; i < matrizDist.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrizDist.GetLength(1); j++)
+            {
+                foreach (var a in arestas)
+                {
+                    if (j + 1 == a.VerticeEntrada.Indice && i + 1 == a.VerticeSaida.Indice)
+                    {
+                        matrizDist[i, j] = matrizDist[i, j] == 0 ? a.Peso : +a.Peso;
+                    }
+                }
+            }
+        }
+
+        for (int k = 0; k < matrizDist.GetLength(0); k++)
+        {
+            for (int i = 0; i < matrizDist.GetLength(1); i++)
+            {
+                for (int j = 0; j < vertices.Count; j++)
+                {
+                    if (matrizDist[i, j] > matrizDist[i, k] + matrizDist[k, j])
+                    {
+                        matrizDist[i, j] = matrizDist[i, k] + matrizDist[k, j];
+                    }
+                }
+
+            }
+        }
+
+        for (int i = 0; i < matrizDist.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrizDist.GetLength(1); j++)
+            {
+                Console.Write($"{matrizDist[i, j]} ");
+            }
+            Console.WriteLine();
         }
     }
 
