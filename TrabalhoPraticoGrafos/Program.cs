@@ -126,7 +126,7 @@
                     ConstruirGrafo();
                     break;
                 case "2":
-                    grafoLido = LerGrafo("../../../grafo.txt");
+                    grafoLido = LerGrafo("./grafo.txt");
                     Console.Clear();
                     break;
                 case "3":
@@ -256,7 +256,9 @@
                     Console.WriteLine("Informe o vértice de destino:");
                     int verticeDestino = int.Parse(Console.ReadLine());
 
-                    grafoLido?.ExecutarDijkstra(verticeOrigem, verticeDestino);
+                    grafoLido.Dijkstra(verticeOrigem,verticeDestino);
+
+                    //grafoLido?.ExecutarDijkstra(verticeOrigem, verticeDestino);
                     break;
                 case "15":
                     Console.WriteLine("Saindo da aplicação");

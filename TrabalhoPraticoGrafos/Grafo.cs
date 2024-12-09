@@ -368,89 +368,63 @@
         finalizado[verticeAtual] = tempo;
     }
 
-    public void ExecutarDijkstra(int verticeOrigem, int verticeDestino)
+    public void Dijkstra(int origem, int destino)
     {
-        var distancias = new Dictionary<int, double>();
-        var predecessores = new Dictionary<int, int?>();
-        var visitados = new HashSet<int>();
-        var minHeap = new SortedList<double, int>();
+        Vertice primeiro = vertices.Find(v => v.Indice == origem);
+        Vertice d = vertices.Find(v => v.Indice == destino);
 
-        foreach (var vertice in vertices)
+        if (primeiro == null || d == null)
         {
-            distancias[vertice.Indice] = double.PositiveInfinity;
-            predecessores[vertice.Indice] = null;
+            Console.WriteLine("O vértice de origem ou de destino fornecido não existe.");
+            return;
         }
 
-        distancias[verticeOrigem] = 0;
-        minHeap.Add(0, verticeOrigem);
+        List<Aresta> explorados = [];
+        Queue<Vertice> fila = [];
+        fila.Enqueue(primeiro);
+        double menorCaminho = 0;
 
-        while (minHeap.Count > 0)
+        primeiro.distancia = 0;
+
+        while (fila.Count > 0)
         {
-            var currentDistancia = minHeap.Keys[0];
-            var verticeAtual = minHeap.Values[0];
-            minHeap.RemoveAt(0);
+            var v = fila.Dequeue();
 
-            if (verticeAtual == verticeDestino)
-                break;
+            var arestasAdj = arestas.Where(a => a.VerticeSaida == v).ToList();
 
-            var adjacentes = arestas.Where(a => a.VerticeSaida.Indice == verticeAtual);
-            foreach (var aresta in adjacentes)
+            foreach (Aresta a in arestasAdj)
             {
-                var vizinho = aresta.VerticeEntrada.Indice;
-                var pesoAresta = aresta.Peso;
-                var novaDistancia = distancias[verticeAtual] + pesoAresta;
-
-                if (novaDistancia < distancias[vizinho])
+                if (!explorados.Contains(a))
                 {
-                    distancias[vizinho] = novaDistancia;
-                    predecessores[vizinho] = verticeAtual;
-
-                    if (minHeap.ContainsValue(vizinho))
+                    double novaDistancia = v.distancia + a.Peso;
+                    if (novaDistancia < a.VerticeEntrada.distancia)
                     {
-                        minHeap.RemoveAt(minHeap.IndexOfValue(vizinho));
+                        a.VerticeEntrada.distancia = novaDistancia;
                     }
-                    minHeap.Add(novaDistancia, vizinho);
+
+                    if (!fila.Contains(a.VerticeEntrada))
+                    {
+                        fila.Enqueue(a.VerticeEntrada);
+                    }
+
+                    explorados.Add(a);
+
+                    if (a.VerticeEntrada.Indice == destino)
+                    {
+                        menorCaminho = a.VerticeEntrada.distancia;
+                    }
                 }
             }
         }
 
-        ImprimirCaminho(verticeOrigem, verticeDestino, predecessores, distancias);
+        if (menorCaminho > 0)
+        {
+            Console.WriteLine("Menor caminho de " + origem + " para " + destino + ": " + menorCaminho);
+        }
+        else
+        {
+            Console.WriteLine("Não foi possível encontrar um caminho de " + origem + " para " + destino);
+        }
     }
 
-    public void ImprimirCaminho(int verticeOrigem, int verticeDestino, Dictionary<int, int?> predecessores, Dictionary<int, double> distancias)
-    {
-        if (distancias[verticeDestino] == double.PositiveInfinity)
-        {
-            Console.WriteLine("Não há caminho entre os vértices.");
-            return;
-        }
-
-        var caminho = new Stack<int>();
-        var verticeAtual = verticeDestino;
-
-        while (verticeAtual != verticeOrigem)
-        {
-            caminho.Push(verticeAtual);
-            verticeAtual = predecessores[verticeAtual].Value;
-        }
-        caminho.Push(verticeOrigem);
-
-        Console.WriteLine($"Caminho mais curto de {verticeOrigem} a {verticeDestino}:");
-        double pesoTotal = 0;
-        int? verticeAnterior = null;
-        while (caminho.Count > 1)
-        {
-            var v1 = caminho.Pop();
-            var v2 = caminho.Peek();
-            var aresta = arestas.FirstOrDefault(a => a.VerticeSaida.Indice == v1 && a.VerticeEntrada.Indice == v2);
-
-            if (aresta != null)
-            {
-                pesoTotal += aresta.Peso;
-                Console.WriteLine($"Vértice {v1} -> {v2} com peso {aresta.Peso}");
-            }
-        }
-
-        Console.WriteLine($"Peso total do caminho: {pesoTotal}");
-    }
 }
