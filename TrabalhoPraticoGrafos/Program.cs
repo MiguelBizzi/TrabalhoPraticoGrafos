@@ -7,7 +7,7 @@
 
         Grafo grafo = new Grafo();
         Console.Write("Digite a quantidade de vértices: ");
-        int qtdVertices = int.Parse(Console.ReadLine());
+        int qtdVertices = int.TryParse(Console.ReadLine(), out qtdVertices)?qtdVertices:throw new Exception("Ocorreu um erro. O valor não foi inserido ou estava em um formato incorreto.");
 
         for (int i = 1; i <= qtdVertices; i++)
         {
@@ -15,19 +15,20 @@
         }
 
         Console.Write("Digite a quantidade de arestas: ");
-        int qtdArestas = int.Parse(Console.ReadLine());
+        int qtdArestas = int.TryParse(Console.ReadLine(), out qtdArestas)?qtdArestas:throw new Exception("Ocorreu um erro. O valor não foi inserido ou estava em um formato incorreto.");
 
-        for (int i = 0; i < qtdArestas; i++)
+        bool verticeValido = true;
+        for (int i = 0; i < qtdArestas && verticeValido; i++)
         {
             Console.WriteLine($"Aresta {i + 1}:");
             Console.Write("Vértice de saída: ");
-            int saida = int.Parse(Console.ReadLine());
+            int saida = int.TryParse(Console.ReadLine(), out saida)?saida:throw new Exception("Ocorreu um erro. O valor não foi inserido ou estava em um formato incorreto.");
             Console.Write("Vértice de entrada: ");
-            int entrada = int.Parse(Console.ReadLine());
+            int entrada = int.TryParse(Console.ReadLine(), out entrada)?entrada:throw new Exception("Ocorreu um erro. O valor não foi inserido ou estava em um formato incorreto.");
             Console.Write("Peso: ");
-            double peso = double.Parse(Console.ReadLine());
+            double peso = double.TryParse(Console.ReadLine(),out peso)?peso:throw new Exception("Ocorreu um erro. O valor não foi inserido ou estava em um formato incorreto.");
 
-            grafo.AdicionarAresta(saida, entrada, peso);
+            verticeValido = grafo.AdicionarAresta(saida, entrada, peso);
         }
 
         Console.WriteLine();
@@ -104,10 +105,10 @@
             Console.WriteLine("2. Ler grafo");
             if (grafoLido != null)
             {
-                Console.WriteLine("3. Imprimir todas as arestas adjacentes de uma aresta");
-                Console.WriteLine("4. Imprimir todas as arestas adjacentes de um vértice");
-                Console.WriteLine("5. Imprimir todas as arestas incidentes de uma aresta");
-                Console.WriteLine("6. Imprimir todas as arestas incidentes de um vértice");
+                Console.WriteLine("3. Imprimir todas as arestas adjacentes a uma aresta");
+                Console.WriteLine("4. Imprimir todas as vértices adjacentes a um vértice");
+                Console.WriteLine("5. Imprimir todas as arestas incidentes a um vértice");
+                Console.WriteLine("6. Imprimir todas as vértices incidentes a uma aresta");
                 Console.WriteLine("7. Imprimir o grau de um vértice");
                 Console.WriteLine("8. Determinar se dois vértices são adjacentes");
                 Console.WriteLine("9. Substituir o peso de uma aresta");
@@ -128,7 +129,7 @@
                     ConstruirGrafo();
                     break;
                 case "2":
-                    grafoLido = LerGrafo("../../../grafo.txt");
+                    grafoLido = LerGrafo("./grafo.txt");
                     Console.Clear();
                     break;
                 case "3":
@@ -184,6 +185,19 @@
                     grafoLido.ImprimirGrauVertice(int.Parse(Console.ReadLine()));
                     break;
                 case "8":
+
+                    Console.WriteLine("Informe dois vértices para verificar se são adjacentes");
+
+                    Console.WriteLine("Vértice 1:");
+                    int v1 = int.TryParse(Console.ReadLine(), out int v) ? v : throw new Exception("Valor inválido.");
+
+                    Console.WriteLine("Vértice 2:");
+
+                    int v2 = int.TryParse(Console.ReadLine(), out v2) ? v2 : throw new Exception("Valor inválido.");
+
+                    grafoLido.MostrarSeDoisSaoAdjacentes(v1, v2);
+                    break;
+                case "9":
                     if (grafoLido == null)
                     {
                         Console.WriteLine("Grafo não lido!");
@@ -198,6 +212,39 @@
 
                     grafoLido.SubstituirPesoAresta(origem, destino, novoPeso);
                     break;
+                case "10":
+
+                    if (grafoLido == null)
+                    {
+                        Console.WriteLine("Grafo não lido!");
+                        break;
+                    }
+
+                    Console.WriteLine("Informe os vértices que serão trocados.");
+
+                    Console.WriteLine("Vértice 1:");
+                    
+                    int vertice1 = int.TryParse(Console.ReadLine(), out vertice1) ? vertice1 : throw new Exception("Valor inválido.");
+
+                    Console.WriteLine("Vértice 2:");
+
+                    int vertice2 = int.TryParse(Console.ReadLine(), out vertice2) ? vertice2 : throw new Exception("Valor inválido.");
+
+                    grafoLido.TrocarVertices(vertice1, vertice2);
+
+                    break;
+                case "11":
+                    Console.WriteLine("Escreva o vértice no qual deseja começar a busca em largura.");
+
+                    int verticeLargura = int.TryParse(Console.ReadLine(), out verticeLargura) ? verticeLargura : throw new Exception("Valor inválido.");
+                    grafoLido.IniciarBuscaLargura(verticeLargura);
+                    break;
+                case "12":
+                    grafoLido.IniciarBuscaProfundidade();
+                break;
+                case "13":
+
+                break;
                 case "15":
                     Console.WriteLine("Saindo da aplicação");
                     return;
