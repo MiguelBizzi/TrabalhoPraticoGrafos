@@ -127,7 +127,6 @@
                     break;
                 case "2":
                     grafoLido = LerGrafo("../../../grafo.txt");
-                    Console.Clear();
                     break;
                 case "3":
                     if (grafoLido == null)
